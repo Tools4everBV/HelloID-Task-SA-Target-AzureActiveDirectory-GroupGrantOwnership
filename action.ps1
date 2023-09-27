@@ -32,7 +32,7 @@ try {
                 ContentType = 'application/json'
                 Method      = 'POST'
                 Headers     = $headers
-                Body        = @{ '@odata.id' = "https://graph.microsoft.com/v1.0/users/$($owner.UserIdentity)" } | ConvertTo-Json -Depth 10
+                Body        = @{ '@odata.id' = "https://graph.microsoft.com/v1.0/users/$($owner.userPrincipalName)" } | ConvertTo-Json -Depth 10
             }
             $null = Invoke-RestMethod @splatAddOwnerToGroup
 
@@ -41,7 +41,7 @@ try {
                 System            = 'AzureActiveDirectory'
                 TargetIdentifier  = $formObject.GroupIdentity
                 TargetDisplayName = $formObject.GroupIdentity
-                Message           = "AzureActiveDirectory action: [GroupGrantOwnership] for group [$($formObject.GroupIdentity)] for: [$($owner.UserIdentity)] executed successfully"
+                Message           = "AzureActiveDirectory action: [GroupGrantOwnership] for group [$($formObject.GroupIdentity)] for: [$($owner.userPrincipalName)] executed successfully"
                 IsError           = $false
             }
 
@@ -62,7 +62,7 @@ try {
                     System            = 'AzureActiveDirectory'
                     TargetIdentifier  = $formObject.GroupIdentity
                     TargetDisplayName = $formObject.GroupIdentity
-                    Message           = "AzureActiveDirectory action: [GroupGrantOwnership for group [$($formObject.GroupIdentity))] ] for: [$($owner.UserIdentity)] executed successfully. Note that the account was not a member"
+                    Message           = "AzureActiveDirectory action: [GroupGrantOwnership for group [$($formObject.GroupIdentity))] ] for: [$($owner.userPrincipalName)] executed successfully. Note that the account was not a member"
                     IsError           = $false
                 }
                 Write-Information -Tags 'Audit' -MessageData $auditLog
@@ -73,7 +73,7 @@ try {
                     System            = 'AzureActiveDirectory'
                     TargetIdentifier  = $formObject.GroupIdentity
                     TargetDisplayName = $formObject.GroupIdentity
-                    Message           = "Could not execute AzureActiveDirectory action: [GroupGrantOwnership] for group [$($formObject.GroupIdentity)] for: [$($owner.UserIdentity)], error: $($errorExceptionDetails)"
+                    Message           = "Could not execute AzureActiveDirectory action: [GroupGrantOwnership] for group [$($formObject.GroupIdentity)] for: [$($owner.userPrincipalName)], error: $($errorExceptionDetails)"
                     IsError           = $true
                 }
                 Write-Information -Tags 'Audit' -MessageData $auditLog
